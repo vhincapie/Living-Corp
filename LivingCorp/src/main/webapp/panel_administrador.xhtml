@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Panel Administrador</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <link rel="stylesheet" type="text/css" href="css/primeflex.css" />
+            <div class="surface-section text-center">
+                <div class="mb-3 font-bold text-2xl">
+                    <span class="text-900">Living Corp, </span>
+                    <span class="text-blue-600">Bienestar y Calidad</span>
+                </div>
+                <div class="text-700 text-sm mb-6">¡Gestiona las propiedades, recursos y proveedores de servicios!</div>
+                <div class="grid">
+                    <div class="col-12 md:col-4 mb-4 px-5">
+                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                            <i class="pi pi-home text-4xl text-blue-500" />
+                        </span>
+                        <div class="text-900 mb-3 font-medium">Gestionar Inmuebles</div>
+                        <span class="text-700 text-sm line-height-3">Administra las propiedades destinadas para arriendo o venta.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                            <i class="pi pi-user text-4xl text-blue-500" />
+                        </span>
+                        <div class="text-900 mb-3 font-medium">Gestionar Usuarios</div>
+                        <span class="text-700 text-sm line-height-3">Crea y gestiona usuarios para acceso a la plataforma.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                            <i class="pi pi-id-card text-4xl text-blue-500" />
+                        </span>
+                        <div class="text-900 mb-3 font-medium">Control de Residentes</div>
+                        <span class="text-700 text-sm line-height-3">Lleva un control de los residentes de la propiedades.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                            <i class="pi pi-th-large text-4xl text-blue-500" />
+                        </span>
+                        <div class="text-900 mb-3 font-medium">Gestionar Recursos</div>
+                        <span class="text-700 text-sm line-height-3">Administra los recursos de las propiedades.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                            <i class="pi pi-users text-4xl text-blue-500" />
+                        </span>
+                        <div class="text-900 mb-3 font-medium">Gestionar Proveedores</div>
+                        <span class="text-700 text-sm line-height-3">Administra los proveedores de servicio.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+                        <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                            <i class="pi pi-file-pdf text-4xl text-blue-500" />
+                        </span>
+                        <div class="text-900 mb-3 font-medium">Generar Reportes</div>
+                        <span class="text-700 text-sm line-height-3">Consulta y descarga reportes por propiedad.</span>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html [
+        <!ENTITY copy "&#169;">
+        ]>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+    <title><ui:insert name="title"> </ui:insert></title>
+    <style>
+        #header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #ffffff;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        #content {
+            margin-top: 180px;
+        }
+
+        #footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+    <f:event type="preRenderView" listener="#{loginBean.verificarSesion}" />
+</h:head>
+<h:body>
+
+    <!-- Encabezado -->
+    <div id="header">
+        <div id="banner">
+            <p:graphicImage value="images/banner.jpg" style="max-width: 100%; height: auto;" />
+        </div>
+        <h:form>
+            <p:menubar>
+                <p:menuitem value="Inicio" url="panel_cliente.xhtml" />
+                <p:menuitem value="Reservar Recursos" url="reservar_recursos.xhtml" />
+
+                <p:submenu label="Solicitud de Servicios">
+                    <p:menuitem value="Cotización" url="cotizacion_servicio.xhtml" />
+                    <p:menuitem value="Solicitar Servicio" url="solicitar_servicio.xhtml" />
+                </p:submenu>
+                <f:facet name="options">
+                    <p:commandButton value="Cerrar sesión" icon="pi pi-fw pi-sign-out" styleClass="ui-button-info" action="#{loginBean.cerrarSesion}"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </div>
+
+    <!-- Área de contenido -->
+    <div id="content">
+        <ui:insert name="content">
+            <!-- Contenido específico de cada página -->
+        </ui:insert>
+    </div>
+
+    <!-- Pie de página -->
+    <div id="footer">
+        <p:panel>
+            <p>Derechos Reservados &copy; 2024 Living Corp</p>
+        </p:panel>
+    </div>
+
+</h:body>
+</html>

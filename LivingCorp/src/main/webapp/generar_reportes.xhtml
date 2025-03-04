@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Generar Reportes</ui:define>
+        <ui:define name="content">
+            <!-- Tabla Estadística de Recursos -->
+            <h:form>
+                <div class="card">
+                    <p:dataTable id="estadisticaRecursos" var="recurso" value="#{reservaRecursoBean.estadisticaRecursos}" paginator="true" rows="10">
+                        <!-- Encabezado del reporte -->
+                        <f:facet name="header">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h:outputText value="Reporte de Recursos" style="font-weight:bold;"/>
+                                <p:commandButton value="PDF" icon="pi pi-file-pdf" styleClass="mr-2 mb-2" ajax="false">
+                                    <p:dataExporter type="pdf" target="estadisticaRecursos" fileName="reporte_recursos" visibleOnly="true"/>
+                                </p:commandButton>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="Recurso">
+                            <h:outputText value="#{recurso.tipoRecurso}" />
+                        </p:column>
+
+                        <p:column headerText="Cantidad de Reservas">
+                            <h:outputText value="#{recurso.cantidadReservas}" />
+                        </p:column>
+
+                        <p:column headerText="Tiempo Reservado (min)">
+                            <h:outputText value="#{recurso.tiempoReservado}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

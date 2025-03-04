@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Gestión de Usuarios</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <p:growl id="growl" showDetail="true" />
+            <!-- Formulario registro usuario -->
+            <h:form>
+                <p:panel header="Registrar Usuario">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="nombreUsuario" value="Nombre de Usuario:" />
+                        <p:inputText id="nombreUsuario" value="#{usuarioBean.usuarioDTO.nombreUsuario}" required="true" maxlength="10" />
+
+                        <h:outputLabel for="correo" value="Correo Electrónico:" />
+                        <p:inputText id="correo" value="#{usuarioBean.usuarioDTO.correoUsuario}" required="true" maxlength="100" />
+
+                        <h:outputLabel for="contraseña" value="Contraseña:" />
+                        <p:password id="contraseña" value="#{usuarioBean.usuarioDTO.contraseniaUsuario}" required="true" feedback="true" maxlength="10" />
+
+                        <h:outputLabel for="adminPropiedad" value="¿Administrador de Propiedad?" />
+                        <p:selectBooleanCheckbox id="adminPropiedad" value="#{usuarioBean.usuarioDTO.administradorPropiedad}" />
+
+                        <h:outputLabel for="propietarioResidente" value="¿Propietario Residente?" />
+                        <p:selectBooleanCheckbox id="propietarioResidente" value="#{usuarioBean.usuarioDTO.propietarioResidente}" />
+
+                        <p:commandButton value="Registrar Usuario" action="#{usuarioBean.crearUsuario}" update=":growl" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

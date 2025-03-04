@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_cliente.xhtml">
+        <ui:define name="title">Panel Cliente</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <link rel="stylesheet" type="text/css" href="css/primeflex.css" />
+            <div class="surface-section text-center">
+                <div class="mb-3 font-bold text-2xl">
+                    <span class="text-900">Living Corp, </span>
+                    <span class="text-blue-600">Bienestar y Calidad</span>
+                </div>
+                <div class="text-700 text-sm mb-6">¡Gestiona tus reservas y solicitudes de servicios con facilidad y eficiencia!</div>
+                <div class="grid">
+                    <div class="col-12 md:col-4 mb-4 px-5">
+            <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                <i class="pi pi-calendar text-4xl text-blue-500" />
+            </span>
+                        <div class="text-900 mb-3 font-medium">Reservar Recursos</div>
+                        <span class="text-700 text-sm line-height-3">Programa eventos en nuestras áreas comunes para disfrutar con familia y amigos.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+            <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                <i class="pi pi-wallet text-4xl text-blue-500" />
+            </span>
+                        <div class="text-900 mb-3 font-medium">Solicitar Servicios</div>
+                        <span class="text-700 text-sm line-height-3">Solicita servicios según tus necesidades.</span>
+                    </div>
+                    <div class="col-12 md:col-4 mb-4 px-5">
+            <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
+                <i class="pi pi-comment text-4xl text-blue-500" />
+            </span>
+                        <div class="text-900 mb-3 font-medium">Cotizar Servicios</div>
+                        <span class="text-700 text-sm line-height-3">Solicita una cotización para los servicios que necesitas.</span>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_cliente.xhtml">
+        <ui:define name="title">Recursos Disponibles</ui:define>
+        <ui:define name="content">
+            <style>
+                .card-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
+                    gap: 20px;
+                }
+                .card {
+                    width: 100%;
+                }
+            </style>
+            <!-- Contenido -->
+            <h:form id="formEspaciosDisponibles">
+                <div class="card-container">
+                    <ui:repeat value="#{recursoBean.listaRecursosPropiedades}" var="recursoPropiedad">
+                        <p:card class="card">
+                            <f:facet name="header">
+                                <p:graphicImage value="#{imagenBean.imagenesRecursos[recursoPropiedad.idRecursoPropiedad - 1]}" alt="recurso" />
+                            </f:facet>
+                            <f:facet name="title">
+                                <h:outputText value="#{recursoPropiedad.recurso.tipoRecurso}" />
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Descripción: #{recursoPropiedad.recurso.descripcionRecurso}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Propiedad: #{recursoPropiedad.propiedad.nombrePropiedad}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Precio Mínimo: #{recursoPropiedad.precioMinimo} COP" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Tiempo Mínimo: #{recursoPropiedad.tiempoMinimo} Horas" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Disponibilidad de Recurso: #{recursoPropiedad.disponibilidadRecurso}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Capacidad: #{recursoPropiedad.capacidadRecurso} personas" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="footer">
+                                <p:commandButton value="Reservar" update="dlgReserva" oncomplete="PF('dlgReserva').show()"
+                                                 action="#{reservaRecursoBean.setIdRecursoPropiedadSeleccionado(recursoPropiedad.idRecursoPropiedad)}" />
+                            </f:facet>
+                        </p:card>
+                    </ui:repeat>
+                </div>
+            </h:form>
+
+            <p:growl id="growl" showDetail="true" />
+            <!-- Diálogo de reserva -->
+            <p:dialog id="dlgReserva" header="Reservar Recurso" widgetVar="dlgReserva" resizable="false" modal="true">
+                <h:form id="formReservaRecurso">
+
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="nombreUsuario" value="Nombre de Usuario:" />
+                        <p:inputText id="nombreUsuario" value="#{reservaRecursoBean.nombreUsuario}" disabled="true" required="true" />
+
+                        <h:outputLabel for="idPropiedadRecurso" value="ID del Recurso:" />
+                        <p:inputText id="idPropiedadRecurso" value="#{reservaRecursoBean.idRecursoPropiedadSeleccionado}" disabled="true" required="true" />
+
+                        <h:outputLabel for="fechaHoraReserva" value="Fecha y Hora de la Reserva:" />
+                        <p:datePicker id="fechaHoraReserva" value="#{reservaRecursoBean.reservaRecursoDTO.fechaHoraReserva}" disabled="true" timeInput="true" pattern="dd/MM/yyyy HH:mm" required="true" />
+
+                        <h:outputLabel for="fechaHoraInicioReserva" value="Fecha y Hora de Inicio de la Reserva:" />
+                        <p:datePicker id="fechaHoraInicioReserva" value="#{reservaRecursoBean.reservaRecursoDTO.fechaHoraInicioReserva}"
+                                      timeInput="true" pattern="dd/MM/yyyy HH:mm" mindate="#{reservaRecursoBean.fechaMinima}" required="true">
+                            <f:ajax event="dateSelect" render="costoReserva" listener="#{reservaRecursoBean.actualizarCosto}"/>
+                        </p:datePicker>
+
+                        <h:outputLabel for="fechaHoraFinReserva" value="Fecha y Hora de Fin de la Reserva:" />
+                        <p:datePicker id="fechaHoraFinReserva" value="#{reservaRecursoBean.reservaRecursoDTO.fechaHoraFinReserva}"
+                                      timeInput="true" pattern="dd/MM/yyyy HH:mm" mindate="#{reservaRecursoBean.fechaMinima}" required="true">
+                            <f:ajax event="dateSelect" render="costoReserva" listener="#{reservaRecursoBean.actualizarCosto}"/>
+                        </p:datePicker>
+
+                        <h:outputLabel for="costoReserva" value="Costo de la Reserva:" />
+                        <p:inputText id="costoReserva" value="#{reservaRecursoBean.costoReserva}"  disabled="true" required="true" />
+
+                        <h:outputLabel for="pagoCompleto" value="¿Pago Completo?" />
+                        <p:selectBooleanCheckbox id="pagoCompleto" value="#{reservaRecursoBean.reservaRecursoDTO.pagoCompleto}" />
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="Confirmar Reserva" action="#{reservaRecursoBean.agendarRecurso}" update=":growl" oncomplete="PF('dlgReserva').hide()" />
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

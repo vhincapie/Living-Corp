@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Control de Residentes</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <p:growl id="growl" showDetail="true" />
+            <!-- Formulario para agregar residentes -->
+            <h:form>
+                <p:panel header="Agregar Residente">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="propiedad" value="Propiedad:" />
+                        <p:selectOneMenu id="propiedad" value="#{residenteBean.propiedadDTO.idPropiedad}" required="true" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItems value="#{residenteBean.listaPropiedades}" var="propiedad" itemValue="#{propiedad.idPropiedad}" itemLabel="#{propiedad.nombrePropiedad}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="usuario" value="Usuario:" />
+                        <p:selectOneMenu id="usuario" value="#{residenteBean.usuarioDTO.nombreUsuario}" required="true" maxlength="10" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItems value="#{residenteBean.listaUsuarios}" var="usuario" itemValue="#{usuario.nombreUsuario}" itemLabel="#{usuario.nombreUsuario}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="tipo" value="Tipo: " />
+                        <p:selectOneMenu id="tipo" value="#{residenteBean.residentePropiedadDTO.residente}" required="true" style="width: 100%">
+                            <f:selectItem itemLabel="Residente" itemValue="true" />
+                            <f:selectItem itemLabel="Arrendatario" itemValue="false" />
+                        </p:selectOneMenu>
+
+                        <p:commandButton value="Agregar" action="#{residenteBean.asociarResidenteConPropiedad}" update=":growl" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form><br/>
+
+            <!-- Lista de Residentes -->
+            <h:form>
+                <div class="card">
+                    <p:dataTable id="residentes" var="residente" value="#{residenteBean.listaResidentePropiedades}" paginator="true" rows="10">
+                        <!-- Encabezado del reporte -->
+                        <f:facet name="header">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h:outputText value="Reporte de Residentes" style="font-weight:bold;"/>
+                                <p:commandButton value="PDF" icon="pi pi-file-pdf" styleClass="mr-2 mb-2" ajax="false">
+                                    <p:dataExporter type="pdf" target="residentes" fileName="residentes" visibleOnly="true"/>
+                                </p:commandButton>
+                            </div>
+                        </f:facet>
+
+                        <!-- Columnas de la tabla -->
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="ID" title="ID"/>
+                            </f:facet>
+                            <h:outputText value="#{residente.idResidentePropiedad}" />
+                        </p:column>
+
+                        <p:column headerText="Propiedad">
+                            <h:outputText value="#{residente.propiedad.nombrePropiedad}" />
+                        </p:column>
+
+                        <p:column headerText="Usuario">
+                            <h:outputText value="#{residente.usuario.nombreUsuario}" />
+                        </p:column>
+
+                        <p:column headerText="Residente(true)/Arrendatario(false)">
+                            <h:outputText value="#{residente.residente}" />
+                        </p:column>
+                    </p:dataTable>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Registro Propiedades</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <p:growl id="growl" showDetail="true" />
+            <!-- Formulario registro propiedad -->
+            <h:form>
+                <p:panel header="Registrar Propiedad">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="nombrePropiedad" value="Nombre de la Propiedad:" />
+                        <p:inputText id="nombrePropiedad" value="#{propiedadBean.propiedadDTO.nombrePropiedad}" required="true" maxlength="150" style="width: 100%"/>
+
+                        <p:outputLabel value="Ciudad: "/>
+                        <p:selectOneMenu id="ciudadPropiedad" value="#{propiedadBean.propiedadDTO.ciudadPropiedad}" required="true" maxlength="255" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="Bogotá" itemValue="Bogotá"/>
+                            <f:selectItem itemLabel="Medellín" itemValue="Medellín"/>
+                            <f:selectItem itemLabel="Cali" itemValue="Cali"/>
+                            <f:selectItem itemLabel="Barranquilla" itemValue="Barranquilla"/>
+                            <f:selectItem itemLabel="Cartagena" itemValue="Cartagena"/>
+                            <f:selectItem itemLabel="Bucaramanga" itemValue="Bucaramanga"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="direccionPropiedad" value="Dirección:" />
+                        <p:inputText id="direccionPropiedad" value="#{propiedadBean.propiedadDTO.direccionPropiedad}" required="true" style="width: 100%"/>
+
+                        <h:outputLabel for="areaPropiedad" value="Área (m²):" />
+                        <p:inputNumber id="areaPropiedad" value="#{propiedadBean.propiedadDTO.areaPropiedad}" required="true" style="width: 100%"/>
+
+                        <h:outputLabel for="precioPropiedad" value="Precio ($):" />
+                        <p:inputNumber id="precioPropiedad" value="#{propiedadBean.propiedadDTO.precioPropiedad}" required="true" style="width: 100%"/>
+
+                        <h:outputLabel for="habitacionesPropiedad" value="Habitaciones:" />
+                        <p:spinner id="habitacionesPropiedad" value="#{propiedadBean.propiedadDTO.habitacionPropiedad}" required="true" min="0"/>
+
+                        <h:outputLabel for="bañosPropiedad" value="Baños:" />
+                        <p:spinner id="bañosPropiedad" value="#{propiedadBean.propiedadDTO.banioPropiedad}" required="true" min="0"/>
+
+                        <h:outputLabel for="descripcionPropiedad" value="Descripción:" />
+                        <p:inputTextarea id="descripcionPropiedad" value="#{propiedadBean.propiedadDTO.descripcionPropiedad}" required="true" maxlength="255" style="width: 100%"/>
+
+                        <h:outputLabel for="adminPropiedad" value="Administrador de la Propiedad:" />
+                        <p:selectOneMenu id="adminPropiedad" value="#{propiedadBean.usuarioDTO.nombreUsuario}" maxlength="10" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItems value="#{propiedadBean.listaUsuarios}" var="usuario" itemValue="#{usuario.nombreUsuario}" itemLabel="#{usuario.nombreUsuario}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="disponibleArriendo" value="Disponible para Arriendo:" />
+                        <p:selectBooleanCheckbox id="disponibleArriendo" value="#{propiedadBean.propiedadDTO.disponibleParaAlquiler}" />
+
+                        <h:outputLabel for="disponibleVenta" value="Disponible para Venta:" />
+                        <p:selectBooleanCheckbox id="disponibleVenta" value="#{propiedadBean.propiedadDTO.disponibleParaVenta}" />
+
+                        <p:commandButton value="Registrar Propiedad" action="#{propiedadBean.crearPropiedad}" update=":growl :propiedades" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form><br/>
+
+            <!-- Lista de propiedades registradas -->
+            <div class="card" style="width: 100%">
+                <p:dataTable id="propiedades" var="propiedad" value="#{propiedadBean.listaPropiedades}" rowKey="#{propiedadBean.propiedadDTO.idPropiedad}" paginator="true" rows="10" emptyMessage="No hay propiedades registradas">
+                    <f:facet name="header">
+                        Lista de Propiedades
+                    </f:facet>
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{propiedad.idPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{propiedad.nombrePropiedad}" />
+                    </p:column>
+                    <p:column headerText="Ciudad">
+                        <h:outputText value="#{propiedad.ciudadPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Dirección">
+                        <h:outputText value="#{propiedad.direccionPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Área">
+                        <h:outputText value="#{propiedad.areaPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{propiedad.precioPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Habitaciones">
+                        <h:outputText value="#{propiedad.habitacionPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Baños">
+                        <h:outputText value="#{propiedad.banioPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{propiedad.descripcionPropiedad}" />
+                    </p:column>
+                    <p:column headerText="Disponible para Arriendo">
+                        <h:outputText value="#{propiedad.disponibleParaAlquiler}" />
+                    </p:column>
+                    <p:column headerText="Disponible para Venta">
+                        <h:outputText value="#{propiedad.disponibleParaVenta}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

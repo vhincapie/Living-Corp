@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Gestión de Proveedores de Servicios</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <div class="card">
+                <p:dataTable id="proveedores" var="proveedor" value="#{proveedorBean.proveedorServicios}" paginator="true" rows="10">
+                    <!-- Encabezado -->
+                    <f:facet name="header">
+                        <h:outputText value="Lista de Proveedores" style="font-weight:bold;"/>
+                    </f:facet>
+
+                    <!-- Columnas de la tabla -->
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="ID" title="ID"/>
+                        </f:facet>
+                        <h:outputText value="#{proveedor.id}" />
+                    </p:column>
+
+                    <p:column headerText="Correo">
+                        <h:outputText value="#{proveedor.email}" />
+                    </p:column>
+
+                    <p:column headerText="Descripción">
+                        <h:outputText value="#{proveedor.description}" />
+                    </p:column>
+
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{proveedor.type}" />
+                    </p:column>
+
+                    <p:column headerText="Precio">
+                        <h:outputText value="#{proveedor.price}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

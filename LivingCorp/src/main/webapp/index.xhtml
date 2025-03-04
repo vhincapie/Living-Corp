@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">Living Corp</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <link rel="stylesheet" type="text/css" href="css/primeflex.css" />
+            <div class="grid grid-nogutter surface-section text-800">
+                <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
+                    <section>
+                        <span class="block text-6xl font-bold mb-1">Living Corp </span>
+                        <div class="text-6xl text-primary font-bold mb-3">Bienestar y calidad</div>
+                        <p class="mt-0 mb-4 text-700 line-height-3">En Living Corp nos especializamos en la gestión integral de bienes inmuebles residenciales. Nuestro compromiso es ofrecer un servicio excepcional, asegurando que cada espacio, ya sea un salón de eventos o una terraza BBQ, esté disponible y en óptimas condiciones para el disfrute de propietarios y arrendatarios. Con atención al detalle y una sólida dedicación, nos esforzamos por crear experiencias únicas que contribuyan al bienestar de quienes confían en nosotros para la administración de sus propiedades.</p>
+                    </section>
+                </div>
+                <div class="col-12 md:col-6 overflow-hidden">
+                    <p:graphicImage value="images/render_5.jpg" alt="render" styleClass="md:ml-auto block md:h-full"
+                                    style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"/>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

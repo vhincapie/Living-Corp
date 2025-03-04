@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template.xhtml">
+        <ui:define name="title">Búsqueda de Inmuebles</ui:define>
+        <ui:define name="content">
+            <style>
+                .field {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+                .field > *:not(:last-child) {
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                }
+                .field > :last-child {
+                    margin-right: 0;
+                    margin-bottom: 10px;
+                }
+                .card-container {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
+                    gap: 20px;
+                }
+                .card {
+                    width: 100%;
+                }
+            </style>
+            <script>
+                function ocultarResultados() {
+                    document.getElementById("resultadoBusqueda").style.display = "none";
+                }
+
+                window.onload = function() {
+                    ocultarResultados();
+                };
+            </script>
+            <!-- Contenido -->
+            <p:panel header="Búsqueda de Inmuebles">
+                <h:form>
+                    <div class="field col-12 md:col-4">
+                        <p:outputLabel value="Ubicación: "/>
+                        <p:selectOneMenu id="ubicacion" value="#{propiedadBean.propiedadDTO.ciudadPropiedad}" required="true">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="Bogotá" itemValue="Bogotá"/>
+                            <f:selectItem itemLabel="Medellín" itemValue="Medellín"/>
+                            <f:selectItem itemLabel="Cali" itemValue="Cali"/>
+                            <f:selectItem itemLabel="Barranquilla" itemValue="Barranquilla"/>
+                            <f:selectItem itemLabel="Cartagena" itemValue="Cartagena"/>
+                            <f:selectItem itemLabel="Bucaramanga" itemValue="Bucaramanga"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Disponible para Arriendo: "/>
+                        <p:selectBooleanCheckbox id="arriendo" value="#{propiedadBean.propiedadDTO.disponibleParaAlquiler}" />
+
+                        <p:outputLabel value="Disponible para Venta: "/>
+                        <p:selectBooleanCheckbox id="venta" value="#{propiedadBean.propiedadDTO.disponibleParaVenta}" />
+
+                        <p:commandButton value="Buscar" action="#{propiedadBean.buscarPropiedades}" update="resultadoBusqueda" />
+                    </div>
+                </h:form>
+            </p:panel><br/>
+
+            <!-- Resultado búsqueda de inmuebles -->
+            <h:form id="resultadoBusqueda">
+                <div class="card-container">
+                    <ui:repeat value="#{propiedadBean.listaPropiedades}" var="inmueble">
+                        <p:card class="card">
+                            <f:facet name="header">
+                                <p:graphicImage value="#{imagenBean.imagenesPropiedades[inmueble.idPropiedad - 1]}" alt="render_propiedad" />
+                            </f:facet>
+                            <f:facet name="title">
+                                <h:outputText value="#{propiedadBean.disponibilidadPropiedad}" />
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Propiedad: #{inmueble.nombrePropiedad}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Ciudad: #{inmueble.ciudadPropiedad}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Dirección: #{inmueble.direccionPropiedad}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Área: #{inmueble.areaPropiedad} m²" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Precio: #{inmueble.precioPropiedad} COP" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Habitaciones: #{inmueble.habitacionPropiedad}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Baños: #{inmueble.banioPropiedad}" />
+                                <br/>
+                            </f:facet>
+                            <f:facet name="subtitle">
+                                <h:outputText value="Descripción: #{inmueble.descripcionPropiedad}" />
+                            </f:facet>
+                            <f:facet name="footer">
+                                <p:commandButton value="Agendar Cita" update="dlgAgendarCita" oncomplete="PF('dlgAgendarCita').show()" action="#{citaBean.setIdPropiedadSeleccionada(inmueble.idPropiedad)}" />
+                            </f:facet>
+                        </p:card>
+                    </ui:repeat>
+                </div>
+            </h:form>
+
+
+            <p:growl id="growl" showDetail="true" />
+            <!-- Dialogo para mostrar el formulario de agendar cita -->
+            <p:dialog id="dlgAgendarCita" header="Agendar Cita" widgetVar="dlgAgendarCita" resizable="false" modal="true">
+                <h:form id="formAgendarCita">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="nombreCliente" value="Nombre del Cliente:" />
+                        <p:inputText id="nombreCliente" value="#{citaBean.citaVisitaDTO.nombreVisitante}" required="true" maxlength="50" />
+
+                        <h:outputLabel for="nombreAsesor" value="Nombre del Asesor:" />
+                        <p:selectOneMenu id="nombreAsesor" value="#{citaBean.citaVisitaDTO.nombreAsesor}" required="true" maxlength="50" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="Eliecer Hernández" itemValue="Eliecer Hernández" />
+                            <f:selectItem itemLabel="Viviana Hincapié" itemValue="Viviana Hincapié" />
+                            <f:selectItem itemLabel="Luis Cruz" itemValue="Luis Cruz" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="fechaCita" value="Fecha y Hora de la Cita:" />
+                        <p:datePicker id="fechaCita" value="#{citaBean.citaVisitaDTO.fechaHoraCita}" timeInput="true" pattern="dd/MM/yyyy HH:mm" mindate="#{citaBean.fechaMinima}" required="true" />
+                    </h:panelGrid>
+
+                    <p:commandButton value="Agendar" action="#{citaBean.agendarCita}" update="growl" oncomplete="PF('dlgAgendarCita').hide()" />
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

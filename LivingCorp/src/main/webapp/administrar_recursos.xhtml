@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_administrador.xhtml">
+        <ui:define name="title">Administrar Recursos y Propiedades</ui:define>
+        <ui:define name="content">
+            <!-- Contenido -->
+            <p:growl id="growl" showDetail="true" />
+
+            <!-- Formulario registro de recursos -->
+            <h:form id="formRegistroRecursos">
+                <p:panel header="Registro de Recursos">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="descripcionRecurso" value="Descripción:" />
+                        <p:inputText id="descripcionRecurso" value="#{recursoBean.recursoDTO.descripcionRecurso}" required="true" maxlength="25" />
+
+                        <p:outputLabel value="Tipo de Recurso:"/>
+                        <p:selectOneMenu id="tipoRecurso" value="#{recursoBean.recursoDTO.tipoRecurso}" required="true" maxlength="25" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="Zona BBQ" itemValue="Zona BBQ"/>
+                            <f:selectItem itemLabel="Salón de Eventos" itemValue="Salón de Eventos"/>
+                        </p:selectOneMenu>
+                        <p:commandButton value="Registrar Recurso" action= "#{recursoBean.crearRecurso}" update=":growl :formAsociacionRecursos" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form><br/>
+
+            <!-- Formulario asociación de recursos a propiedades -->
+            <h:form id="formAsociacionRecursos">
+                <p:panel header="Asociación de Recursos a Propiedades">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="selectRecurso" value="Recurso:" />
+                        <p:selectOneMenu id="selectRecurso" value ="#{recursoBean.idRecurso}" required="true" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItems value="#{recursoBean.listaRecursos}" var="recurso" itemValue="#{recurso.idRecurso}" itemLabel="#{recurso.tipoRecurso}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="selectPropiedad" value="Propiedad:" />
+                        <p:selectOneMenu id="selectPropiedad" value ="#{recursoBean.idPropiedad}" required="true" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItems value="#{recursoBean.listaPropiedades}" var="propiedad" itemValue="#{propiedad.idPropiedad}" itemLabel="#{propiedad.nombrePropiedad}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="precioMinimo" value="Precio Mínimo ($):" />
+                        <p:selectOneMenu id="precioMinimo" value="#{recursoBean.recursoPropiedadDTO.precioMinimo}" required="true" maxlength="25" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="150000 COP" itemValue="150000"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="tiempoMinimo" value="Tiempo Mínimo (horas):" />
+                        <p:selectOneMenu id="tiempoMinimo" value="#{recursoBean.recursoPropiedadDTO.tiempoMinimo}" required="true" maxlength="25" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="3 Horas" itemValue="3"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="disponibilidadRecurso" value="Disponibilidad:" />
+                        <p:selectOneMenu id="disponibilidadRecurso" value="#{recursoBean.recursoPropiedadDTO.disponibilidadRecurso}" required="true" maxlength="10" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItem itemLabel="Disponible" itemValue="Disponible"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="capacidadRecurso" value="Capacidad (personas):" />
+                        <p:spinner id="capacidadRecurso" value="#{recursoBean.recursoPropiedadDTO.capacidadRecurso}" required="true" min="0"/>
+
+                        <h:outputLabel for="emailResponsable" value="Email Responsable:" />
+                        <p:inputText id="emailResponsable" value="#{recursoBean.recursoPropiedadDTO.emailResponsable}" required="true" maxlength="100" style="width: 100%"/>
+
+                        <p:commandButton value="Asociar Recurso" action="#{recursoBean.crearRecursoPropiedad}" update=":growl" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

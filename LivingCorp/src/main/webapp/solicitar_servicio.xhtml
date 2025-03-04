@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta charset="UTF-8" />
+</h:head>
+<h:body>
+    <ui:composition template="template_cliente.xhtml">
+        <ui:define name="title">Solicitar Servicio</ui:define>
+        <ui:define name="content">
+            <p:growl id="growl" showDetail="true" />
+            <!-- Formulario solicitud de servicio -->
+            <h:form>
+                <p:panel header="Solicitud de Servicio">
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel for="fechaSolicitud" value="Fecha y Hora de la Solicitud:" />
+                        <p:datePicker id="fechaSolicitud" value="#{servicioSolicitudBean.solicitudServicioDTO.fechaHoraSolicitud}" timeInput="true" pattern="dd/MM/yyyy HH:mm" disabled="true" required="true" />
+
+                        <h:outputLabel for="usuario" value="Usuario:" />
+                        <p:inputText id="usuario" value="#{servicioSolicitudBean.nombreUsuario}" disabled="true" required="true" />
+
+                        <h:outputLabel for="selectPropiedad" value="Propiedad:" />
+                        <p:selectOneMenu id="selectPropiedad" value ="#{servicioSolicitudBean.idPropiedad}" required="true" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                            <f:selectItems value="#{servicioSolicitudBean.listaPropiedades}" var="propiedad" itemValue="#{propiedad.idPropiedad}" itemLabel="#{propiedad.nombrePropiedad}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="proveedor" value="Proveedor de Servicio:" />
+                        <p:selectOneMenu id="proveedor" value="#{servicioSolicitudBean.idProveedor}" required="true" style="width: 100%">
+                            <f:selectItem itemLabel="Seleccionar" itemValue="#{servicioSolicitudBean.idProveedor}" />
+                            <f:selectItems value="#{cotizacionBean.listaProveedores}" var="proveedor" itemValue="#{proveedor.id}" itemLabel="#{proveedor.type}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="descripcion" value="Descripción:" />
+                        <p:inputTextarea id="descripcion" value="#{servicioSolicitudBean.solicitudServicioDTO.descripcionSolicitud}" required="true" style="width: 100%"/>
+
+                        <h:outputLabel for="fechaServicio" value="Fecha y Hora del Servicio:" />
+                        <p:datePicker id="fechaServicio" value="#{servicioSolicitudBean.solicitudServicioDTO.fechaHoraServicio}"
+                                      timeInput="true" pattern="dd/MM/yyyy HH:mm" mindate="#{servicioSolicitudBean.fechaMinima}" required="true">
+                        </p:datePicker>
+
+                        <h:panelGroup />
+                        <p:commandButton value="Enviar Solicitud" action="#{servicioSolicitudBean.crearSolicitud}" update="growl" />
+                    </h:panelGrid>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
